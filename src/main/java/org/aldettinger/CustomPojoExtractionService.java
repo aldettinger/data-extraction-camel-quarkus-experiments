@@ -2,12 +2,16 @@ package org.aldettinger;
 
 import java.time.LocalDate;
 
+import org.apache.camel.Handler;
+
 import dev.langchain4j.service.UserMessage;
 import io.quarkiverse.langchain4j.RegisterAiService;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Named;
 
 @RegisterAiService
 @ApplicationScoped
+@Named("customPojoExtractionService")
 public interface CustomPojoExtractionService {
 
     //@RegisterForReflection
@@ -24,5 +28,6 @@ public interface CustomPojoExtractionService {
               + "The summary field should concisely relate the customer main ask.";
 
     @UserMessage(CUSTOM_POJO_EXTRACT_PROMPT)
+    @Handler
     CustomPojo extractFromText(String text);
 }
