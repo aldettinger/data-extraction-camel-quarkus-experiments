@@ -14,6 +14,7 @@ public class Routes extends RouteBuilder {
     @Override
     public void configure() {
         from("platform-http:/custom-pojo-extraction-service?produces=application/json")
+                .log("Received ${body}")
                 .bean(customPojoExtractionService)
                 .bean(this, "toPrettyFormat");
     }

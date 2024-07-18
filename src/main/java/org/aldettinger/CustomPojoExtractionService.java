@@ -6,14 +6,14 @@ import org.apache.camel.Handler;
 
 import dev.langchain4j.service.UserMessage;
 import io.quarkiverse.langchain4j.RegisterAiService;
+import io.quarkus.runtime.annotations.RegisterForReflection;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Named;
 
 @RegisterAiService
 @ApplicationScoped
 public interface CustomPojoExtractionService {
 
-    //@RegisterForReflection
+    @RegisterForReflection
     static class CustomPojo {
         public boolean customerSatisfied;
         public String customerName;

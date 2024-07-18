@@ -24,14 +24,14 @@ public class OllamaTestResource implements QuarkusTestResourceLifecycleManager {
         Map<String, String> properties = new HashMap<>();
 
         LOG.info("Starting Ollama container resource");
-        GenericContainer<?> container = new GenericContainer<>(OLLAMA_IMAGE)
+        ollamaContainer = new GenericContainer<>(OLLAMA_IMAGE)
                 .withExposedPorts(OLLAMA_SERVER_PORT)
                 .withLogConsumer(new Slf4jLogConsumer(LOG).withPrefix("basicAuthContainer"))
                 .waitingFor(Wait.forLogMessage(".* msg=\"inference compute\" .*", 1));
 
-        container.start();
+        ollamaContainer.start();
 
-        String baseUrl = String.format("http://%s:%s", container.getHost(), container.getMappedPort(OLLAMA_SERVER_PORT));
+        String baseUrl = String.format("http://%s:%s", ollamaContainer.getHost(), ollamaContainer.getMappedPort(OLLAMA_SERVER_PORT));
         properties.put("quarkus.langchain4j.ollama.base-url", baseUrl);
 
         return properties;
