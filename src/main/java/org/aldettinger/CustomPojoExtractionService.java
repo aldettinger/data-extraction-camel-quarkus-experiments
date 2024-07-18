@@ -11,7 +11,6 @@ import jakarta.inject.Named;
 
 @RegisterAiService
 @ApplicationScoped
-@Named("customPojoExtractionService")
 public interface CustomPojoExtractionService {
 
     //@RegisterForReflection

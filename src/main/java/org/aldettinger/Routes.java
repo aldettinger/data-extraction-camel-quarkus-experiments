@@ -13,18 +13,17 @@ public class Routes extends RouteBuilder {
 
     @Override
     public void configure() {
-        from("platform-http:/custom-pojo-extraction-service")
+        from("platform-http:/custom-pojo-extraction-service?produces=application/json")
                 .bean(customPojoExtractionService)
-                .bean(this, "toPrettyFormat")
-                .log("Extracted message is ${body}");
+                .bean(this, "toPrettyFormat");
     }
 
-    private final static String FORMAT = "****************************************\n"
-                                         + "customerSatisfied: %s\n"
-                                         + "customerName: %s\n"
-                                         + "customerBirthday: %td %tB %tY\n"
-                                         + "summary: %s\n"
-                                         + "****************************************\n";
+    private final static String FORMAT = "{"
+                                         + "\"customerSatisfied\": \"%s\","
+                                         + "\"customerName\": \"%s\","
+                                         + "\"customerBirthday\": \"%td %tB %tY\","
+                                         + "\"summary\": \"%s\""
+                                         + "}";
 
     public static String toPrettyFormat(CustomPojoExtractionService.CustomPojo extract) {
         return String.format(FORMAT, extract.customerSatisfied, extract.customerName, extract.customerBirthday,
